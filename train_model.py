@@ -65,3 +65,10 @@ if __name__ == "__main__":
     dfruns = mlflow.search_runs()
     path2model = dfruns.sort_values("metrics.r2", ascending=False).iloc[0]['artifact_uri'].replace("file://", "") + '/model'
     print(path2model)
+    import json
+    example_input = X_val[0].tolist()
+    
+    payload = {"inputs": [example_input]}
+    payload_json = json.dumps(payload)
+
+    print(f"curl http://127.0.0.1:5003/invocations -H 'Content-Type:application/json' --data '{payload_json}'")
